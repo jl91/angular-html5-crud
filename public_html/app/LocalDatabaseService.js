@@ -25,7 +25,7 @@ app.factory('LocalDatabaseService', function () {
                     localStorage.setItem(entity, '[]');
                     collection = JSON.parse(this.findAll(entity));
                 }
-                collection.push(data);
+                collection.push(data); 
                 localStorage.setItem(entity, JSON.stringify(collection));
                 return true;
             } catch (e) {
