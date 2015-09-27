@@ -14,5 +14,12 @@ app.controller('CRUDController', ['LocalDatabaseService', function (LocalDatabas
                 alert('Houve um erro!');
             }
         };
+
+        this.remove = function (id) {
+            LocalDatabaseService.remove('User', id);
+        };
+        this.edit = function (id) {
+            this.user = LocalDatabaseService.findOne('User', id);
+        };
     }
 ]);

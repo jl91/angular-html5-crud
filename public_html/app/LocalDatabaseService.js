@@ -4,28 +4,30 @@ app.factory('LocalDatabaseService', function () {
 
         this.findAll = function (entity) {
             var collection = localStorage.getItem(entity);
-
             return JSON.parse(collection);
         };
-        this.findBy = function (entity, filter) {
+
+        this.findOne = function (entity, id) {
             var collection = this.findAll(entity);
             var collectionLength = collection.length;
-            if (collection.length) {
-
+            if (collectionLength) {
+                for (var index in collection) {
+                    if (collection[index]._id === id) {
+                        return collection[index];
+                    }
+                }
             }
         };
-        this.findOneBy = function (filter) {
 
-        };
         this.insert = function (entity, data) {
             try {
                 data._id = Date.now();
                 var collection = this.findAll(entity);
                 if (!collection) {
                     localStorage.setItem(entity, '[]');
-                    collection = JSON.parse(this.findAll(entity));
+                    collection = this.findAll(entity);
                 }
-                collection.push(data); 
+                collection.push(data);
                 localStorage.setItem(entity, JSON.stringify(collection));
                 return true;
             } catch (e) {
@@ -33,18 +35,23 @@ app.factory('LocalDatabaseService', function () {
                 return false;
             }
         };
+
         this.update = function (entity, data) {
-            var collection = JSON.parse(this.findAll(entity));
-            for (var row in collection) {
-                if (collection[row]._id === data._id) {
-                    for (var key in collection[row]) {
-                        collection[row][key] = data[key];
+
+            try {
+                var collection = this.findAll(entity);
+                for (var index in collection) {
+                    if (collection[index]._id === data._id) {
+                        collection[index] = data;
+                        localStorage.setItem(entity, JSON.stringify(collection));
+                        return true;
                     }
-
-                    collection[row];
                 }
+                return false;
+            } catch (e) {
+                console.log(e);
+                return false;
             }
-
         };
 
         this.save = function (entity, data) {
@@ -58,6 +65,17 @@ app.factory('LocalDatabaseService', function () {
         };
 
         this.remove = function (entity, id) {
+            var collection = this.findAll(entity);
+
+            for (var index in collection) {
+                if (collection[index]._id === id) {
+                    collection.splice(index, 1);
+                    console.log(collection);
+                    localStorage.setItem(entity, JSON.stringify(collection));
+                    return true;
+                }
+            }
+            return false;
 
         };
     }
