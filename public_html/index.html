@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html ng-app="">
+<html ng-app="AngularHtml5CRUD">
     <head>
         <title>Angular HTML5 CRUD</title>
         <meta charset="UTF-8">
@@ -8,9 +8,88 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
     </head>
     <body>
-        <div><input ng-model="name"> <div>{{name}}</div></div>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
+        <div ng-controller="CRUDController as ctrl">
+            <div class="container">
+                <ul class="list-unstyled">
+                    <li>
+                        <label>Nome:</label>
+                        <input type="text" ng-model="ctrl.user.name">
+                    </li>
+                    <li>
+                        <label>Idade:</label>
+                        <input type="text" ng-model="ctrl.user.age">
+                    </li>
+                    <li>
+                        <label>Email:</label>
+                        <input type="text" ng-model="ctrl.user.email">
+                    </li>
+                    <li>
+                        <input type="button" ng-click="ctrl.save()" value="Salvar">
+                    </li>
+                </ul>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="table-wrap">
+                            <table class="table table-condensed table-striped table-responsive table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            @id
+                                        </th>
+                                        <th class="text-center">
+                                            Nome
+                                        </th>
+                                        <th class="text-center">
+                                            Idade
+                                        </th>
+                                        <th class="text-center">
+                                            Email
+                                        </th>
+                                        <th class="text-center" colspan="2">
+                                            Ações
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="user in ctrl.fetchAll()">
+                                        <td ng-bind="user._id" class="text-center">
+
+                                        </td>
+                                        <td ng-bind="user.name" class="text-center">
+
+                                        </td>
+                                        <td ng-bind="user.age" class="text-center">
+
+                                        </td>
+                                        <td ng-bind="user.email" class="text-center">
+
+                                        </td>
+                                        <td class="text-center">
+                                            <button class="btn btn-sm btn-warning">
+                                                <i class="glyphicon glyphicon-edit"></i>
+                                            </button>
+                                        </td>
+                                        <td class="text-center">
+                                            <button class="btn btn-sm btn-danger">
+                                                <i class="glyphicon glyphicon-remove"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script type="text/javascript"  src="https://code.jquery.com/jquery-2.1.4.min.js" ></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="app/init.js"></script>
+        <script type="text/javascript" src="app/LocalDatabaseService.js"></script>
+        <script type="text/javascript" src="app/CRUDController.js"></script>
+
     </body>
 </html>
